@@ -19,12 +19,18 @@ class_sets:
     classes: [recycling, compost, trash]
     exclude: [hazardous]
 
-# Near-duplicate removal (build_splits.py). Two images count as the same picture
-# when their 64-bit perceptual hashes differ in this many bits or fewer.
-# Measured on our data: distance 0-2 is almost always a true copy; at 4, about
-# half the pairs are different objects with a similar shape on a white
-# background (e.g. two different toothbrushes). Lower to 2 or 3 to keep more images.
-near_duplicate_max_distance: 5
+# Near-duplicate removal (build_splits.py). Distances count how many of the 64
+# bits differ between two image fingerprints (0 = identical look).
+# A pair is a near duplicate only if BOTH fingerprints agree:
+#   same class:      pHash distance <= same_class_max_phash  AND dHash distance <= max_dhash
+#   different class: pHash distance <= cross_class_max_phash AND dHash distance <= max_dhash
+# A cross-class match is a label conflict and drops every image in that group,
+# so its pHash cutoff is stricter. Lower numbers = stricter = fewer images removed.
+# pHash distances are always even (each pHash has 32 one-bits), so 3 acts like 2.
+near_duplicates:
+  same_class_max_phash: 3
+  cross_class_max_phash: 2
+  max_dhash: 2     # tightened 4 -> 3 -> 2 after spot checks (docs/dataset_inventory.md)
 
 # How to split each class. Same seed -> same split every run.
 split:

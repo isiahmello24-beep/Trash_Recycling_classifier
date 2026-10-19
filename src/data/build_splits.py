@@ -6,17 +6,22 @@ What it does, in order:
   2. Collect every image from those folders under data/raw/.
      - Skip folders marked VERIFY (not decided yet).
      - Skip folders whose class is excluded (hazardous when num_classes is 3).
-     - Skip corrupted files that Pillow cannot open.
+     - Drop corrupted files that Pillow cannot fully read.
   3. Remove EXACT duplicates (identical bytes -> identical SHA-256 hash).
-  4. Remove NEAR duplicates (perceptual hash distance <= near_duplicate_max_distance
-     in label_map.yaml, 5 by default), across all classes.
-     If near duplicates disagree on the label, drop all of them (label conflict).
+  4. Remove NEAR duplicates using two image fingerprints, pHash and dHash.
+     The cutoffs live under `near_duplicates:` in label_map.yaml.
+     - Same class:      pHash <= same_class_max_phash  AND dHash <= max_dhash -> near duplicate.
+     - Different class: pHash <= cross_class_max_phash AND dHash <= max_dhash -> label conflict,
+       and the whole group is dropped because we cannot trust its labels.
+     An image only joins a group if it matches the group's kept copy directly.
   5. Shuffle with seed 42 and split each class 70 / 15 / 15.
   6. Copy files into data/train, data/validation, data/test (one sub-folder per class).
   7. Write CSV manifests: data/splits/train.csv, validation.csv, test.csv (path, label).
   8. Re-check the copied files: no exact or near duplicate may sit in two splits.
-  9. Compute class weights from the TRAIN split only -> results/class_weights.json.
+  9. Compute two sets of class weights from the TRAIN split only -> results/class_weights.json.
  10. Write every removed file to results/removed_duplicates.csv.
+ 11. Print the always-guess-the-biggest-class baseline on the validation split.
+ 12. Check the arithmetic: images found - images removed = images in the splits.
 
 Run from the repo root:
     python src/data/build_splits.py                    # uses num_classes from label_map.yaml
@@ -31,6 +36,7 @@ import argparse
 import csv
 import hashlib
 import json
+import math
 import random
 import shutil
 from collections import Counter, defaultdict
@@ -53,7 +59,7 @@ REMOVED_CSV = RESULTS_DIR / "removed_duplicates.csv"
 WEIGHTS_JSON = RESULTS_DIR / "class_weights.json"
 
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".webp"}
-
+REMOVED_COLUMNS = ["file", "kept_copy", "reason", "distance", "dhash_distance"]
 
 
 # ---------------------------------------------------------------------------
@@ -75,20 +81,35 @@ def file_hash(path):
     return h.hexdigest()
 
 
-def perceptual_hash(path):
-    """64-bit perceptual hash (pHash) as a plain integer.
+def image_hashes(path):
+    """Return (pHash, dHash) of an image, each a 64-bit number.
 
-    pHash shrinks the image to a tiny grayscale version and keeps only its
-    overall light/dark pattern. Visually similar images get hashes that differ
-    in only a few bits, even if the files are resized or re-saved.
+    Both shrink the image to a tiny grayscale version:
+      - pHash keeps the overall light/dark pattern (good at spotting re-saved or resized copies).
+      - dHash keeps which way brightness changes from pixel to pixel (edges).
+    Requiring BOTH to be close cuts false matches, like two different bottles
+    that happen to have the same outline on a white background.
     """
     with Image.open(path) as img:
-        return int(str(imagehash.phash(img)), 16)  # hex string -> integer
+        phash = int(str(imagehash.phash(img)), 16)  # hex string -> integer
+        dhash = int(str(imagehash.dhash(img)), 16)
+    return phash, dhash
 
 
 def hamming_distances(one_hash, all_hashes):
     """How many bits differ between one hash and every hash in a numpy array."""
     return np.bitwise_count(np.uint64(one_hash) ^ all_hashes)
+
+
+def is_near_match(same_label, phash_dist, dhash_dist, rules):
+    """True if two images count as the same picture under the label_map.yaml rules.
+
+    Works on single numbers or on whole numpy arrays at once.
+    Same label uses the looser pHash cutoff; different labels use the stricter one,
+    because a cross-class match throws away every image in the group.
+    """
+    phash_limit = np.where(same_label, rules["same_class_max_phash"], rules["cross_class_max_phash"])
+    return (phash_dist <= phash_limit) & (dhash_dist <= rules["max_dhash"])
 
 
 def is_valid_image(path):
@@ -158,15 +179,16 @@ def folders_for_dataset(name, dataset_cfg):
 
 
 def collect_images(config, active, removed_rows):
-    """Return a list of images as dicts: {"path": Path, "label": str}.
+    """Return (list of image dicts {"path", "label"}, number of image files found).
 
     Rules for each raw folder:
       - target VERIFY               -> skip (not decided yet)
       - target in active `exclude`  -> skip (e.g. hazardous in 3-class mode)
       - target not a known class    -> stop with an error (catches typos)
-    Corrupted files are skipped and logged in removed_rows.
+    Corrupted files count as found, are dropped, and are logged in removed_rows.
     """
     items = []
+    n_found = 0
     stats = Counter()
 
     for dataset_name, dataset_cfg in config["datasets"].items():
@@ -191,16 +213,16 @@ def collect_images(config, active, removed_rows):
             for path in sorted(files):
                 if path.suffix.lower() not in IMAGE_EXTENSIONS:
                     continue
+                n_found += 1
                 if not is_valid_image(path):
-                    removed_rows.append({"file": rel(path), "kept_copy": "", "reason": "corrupted", "distance": ""})
+                    removed_rows.append({"file": rel(path), "kept_copy": "", "reason": "corrupted",
+                                         "distance": "", "dhash_distance": ""})
                     continue
                 items.append({"path": path, "label": target})
 
-    print(
-        f"\nRead {len(items)} valid images. Skipped {stats['verify']} VERIFY folders "
-        f"and {stats['excluded']} excluded folders."
-    )
-    return items
+    print(f"\nFound {n_found} images. Skipped {stats['verify']} VERIFY folders "
+          f"and {stats['excluded']} excluded folders.")
+    return items, n_found
 
 
 # ---------------------------------------------------------------------------
@@ -210,12 +232,11 @@ def collect_images(config, active, removed_rows):
 def remove_exact_duplicates(items, removed_rows):
     """Group images by SHA-256. Keep one per group; a mixed-label group is a conflict.
 
-    Returns (kept items, number of exact duplicates removed, number of conflict images).
+    Returns (kept items, exact duplicates removed, images dropped in exact conflicts).
     """
     groups = defaultdict(list)  # sha256 -> [items with those exact bytes]
     for item in items:
-        item["sha256"] = file_hash(item["path"])
-        groups[item["sha256"]].append(item)
+        groups[file_hash(item["path"])].append(item)
 
     kept, n_dupes, n_conflict = [], 0, 0
     for group in groups.values():
@@ -228,14 +249,16 @@ def remove_exact_duplicates(items, removed_rows):
             kept.append(first)
             for dup in group[1:]:
                 removed_rows.append({"file": rel(dup["path"]), "kept_copy": rel(first["path"]),
-                                     "reason": "exact_duplicate", "distance": 0})
+                                     "reason": "exact_duplicate", "distance": 0, "dhash_distance": 0,
+                                     "pair": dup["path"], "pair_with": first["path"]})
                 n_dupes += 1
         else:
             # Same picture, different labels: we cannot trust either label, drop all.
             conflict = "label_conflict (" + " vs ".join(sorted(labels)) + ")"
             for item in group:
                 note = "none (first copy of conflict group)" if item is first else f"none (exact copy of {rel(first['path'])})"
-                removed_rows.append({"file": rel(item["path"]), "kept_copy": note, "reason": conflict, "distance": 0})
+                removed_rows.append({"file": rel(item["path"]), "kept_copy": note, "reason": conflict,
+                                     "distance": 0, "dhash_distance": 0})
                 n_conflict += 1
 
     # Keep the original order so results do not depend on dictionary order.
@@ -244,74 +267,71 @@ def remove_exact_duplicates(items, removed_rows):
     return kept, n_dupes, n_conflict
 
 
-def remove_near_duplicates(items, removed_rows, max_distance):
-    """Remove images whose perceptual hashes are within max_distance bits of each other.
+def remove_near_duplicates(items, removed_rows, rules):
+    """Remove near duplicates across ALL classes, with no chaining.
 
-    Works across ALL classes. Images are grouped in chains: if A is close to B
-    and B is close to C, then A, B and C are one group, even if A and C are
-    further apart. That way the file order can never hide a match.
-      - Everyone in the group has the same label -> keep the first image, drop the rest (near_duplicate).
-      - Labels disagree                          -> drop the whole group (label_conflict).
+    Walks the images in file order. Each image that is still kept becomes an
+    anchor (a "kept copy") and is compared directly with every later image
+    that is still kept. A later image joins the anchor's group only if it
+    matches the ANCHOR itself (see is_near_match). If A matches B and B
+    matches C, C is not grouped with A unless C also matches A.
+      - Every match has the anchor's label -> keep the anchor, drop the matches (near_duplicate).
+      - Any match has a different label    -> drop the anchor and all its matches (label_conflict).
     Returns (kept items, near duplicates removed, conflict groups, conflict images).
     """
     for item in items:
-        item["phash"] = perceptual_hash(item["path"])
-    hashes = np.array([item["phash"] for item in items], dtype=np.uint64)
+        item["phash"], item["dhash"] = image_hashes(item["path"])
+    phashes = np.array([item["phash"] for item in items], dtype=np.uint64)
+    dhashes = np.array([item["dhash"] for item in items], dtype=np.uint64)
+    labels = np.array([item["label"] for item in items])
 
-    # "Union-find": every image starts as its own group. Each close pair we find
-    # merges two groups. group_of[i] points toward the image that names i's group.
-    group_of = list(range(len(items)))
-
-    def find_group(i):
-        while group_of[i] != i:
-            group_of[i] = group_of[group_of[i]]  # shortcut so later lookups are faster
-            i = group_of[i]
-        return i
-
-    for i in range(len(items)):
-        distances = hamming_distances(hashes[i], hashes[i + 1:])  # only later images
-        for k in np.nonzero(distances <= max_distance)[0]:
-            a, b = find_group(i), find_group(i + 1 + int(k))
-            if a != b:
-                group_of[max(a, b)] = min(a, b)  # the earlier image names the merged group
-
-    groups = defaultdict(list)  # group name -> image indexes, in file order
-    for i in range(len(items)):
-        groups[find_group(i)].append(i)
-
-    removed = set()
+    removed = np.zeros(len(items), dtype=bool)  # True once an image is dropped
     n_near, n_conflict_groups, n_conflict_images = 0, 0, 0
-    for members in groups.values():
-        if len(members) == 1:
-            continue
-        labels = {items[i]["label"] for i in members}
-        first = members[0]
 
-        if len(labels) == 1:
-            # Same label: keep the first image. Distance is to that kept copy; in a
-            # chain (A~B~C) it can be above max_distance because C matched via B.
-            for i in members[1:]:
-                removed.add(i)
-                dist = int(np.bitwise_count(hashes[i] ^ hashes[first]))
-                removed_rows.append({"file": rel(items[i]["path"]), "kept_copy": rel(items[first]["path"]),
-                                     "reason": "near_duplicate", "distance": dist})
+    for i, anchor in enumerate(items):
+        if removed[i]:
+            continue
+        p_dist = hamming_distances(anchor["phash"], phashes)
+        d_dist = hamming_distances(anchor["dhash"], dhashes)
+        same = labels == anchor["label"]
+        match = is_near_match(same, p_dist, d_dist, rules)
+        # Only later images that are still kept can join this anchor's group.
+        group = [j for j in np.nonzero(match)[0] if j > i and not removed[j]]
+        if not group:
+            continue
+
+        if all(same[j] for j in group):
+            for j in group:
+                removed[j] = True
+                removed_rows.append({"file": rel(items[j]["path"]), "kept_copy": rel(anchor["path"]),
+                                     "reason": "near_duplicate", "distance": int(p_dist[j]),
+                                     "dhash_distance": int(d_dist[j]),
+                                     "pair": items[j]["path"], "pair_with": anchor["path"]})
                 n_near += 1
         else:
-            # Labels disagree: we cannot trust any of them, drop the whole group.
-            # Each row names its closest image in the group; that distance is <= max_distance.
+            # Labels disagree: drop the anchor and every image in its group.
             n_conflict_groups += 1
-            conflict = "label_conflict (" + " vs ".join(sorted(labels)) + ")"
-            for i in members:
-                removed.add(i)
-                others = [j for j in members if j != i]
-                dists = hamming_distances(hashes[i], hashes[others])
-                closest = others[int(np.argmin(dists))]
-                removed_rows.append({"file": rel(items[i]["path"]),
-                                     "kept_copy": f"none (matches {rel(items[closest]['path'])})",
-                                     "reason": conflict, "distance": int(dists.min())})
-                n_conflict_images += 1
+            group_labels = {anchor["label"]} | {items[j]["label"] for j in group}
+            conflict = "label_conflict (" + " vs ".join(sorted(group_labels)) + ")"
+            # The anchor's row points at its closest match with a different label.
+            cross = [j for j in group if not same[j]]
+            closest = min(cross, key=lambda j: (int(p_dist[j]), int(d_dist[j]), j))
+            removed[i] = True
+            removed_rows.append({"file": rel(anchor["path"]),
+                                 "kept_copy": f"none (anchor of conflict group, matches {rel(items[closest]['path'])})",
+                                 "reason": conflict, "distance": int(p_dist[closest]),
+                                 "dhash_distance": int(d_dist[closest]),
+                                 "pair": anchor["path"], "pair_with": items[closest]["path"]})
+            for j in group:
+                removed[j] = True
+                removed_rows.append({"file": rel(items[j]["path"]),
+                                     "kept_copy": f"none (matches {rel(anchor['path'])})",
+                                     "reason": conflict, "distance": int(p_dist[j]),
+                                     "dhash_distance": int(d_dist[j]),
+                                     "pair": items[j]["path"], "pair_with": anchor["path"]})
+            n_conflict_images += 1 + len(group)
 
-    kept = [item for i, item in enumerate(items) if i not in removed]
+    kept = [item for i, item in enumerate(items) if not removed[i]]
     return kept, n_near, n_conflict_groups, n_conflict_images
 
 
@@ -370,47 +390,76 @@ def copy_splits_and_write_manifests(splits_by_class):
 # Step 8: verify the output on disk
 # ---------------------------------------------------------------------------
 
-def check_no_overlap(max_distance):
+def split_files_on_disk():
+    """List (split name, class name, path) for every copied image in data/<split>/<class>/."""
+    files = []
+    for split_name, split_dir in SPLIT_DIRS.items():
+        files += [(split_name, p.parent.name, p) for p in sorted(split_dir.rglob("*")) if p.is_file()]
+    return files
+
+
+def check_no_overlap(rules):
     """Re-hash every copied file and confirm no exact or near duplicate spans two splits.
 
     This reads the files actually on disk in data/train, data/validation and
     data/test, so it checks the real output, not just our in-memory lists.
+    Near duplicates use the same rules as the removal step.
     """
-    files = []  # (split name, path)
-    for split_name, split_dir in SPLIT_DIRS.items():
-        files += [(split_name, p) for p in sorted(split_dir.rglob("*")) if p.is_file()]
+    files = split_files_on_disk()
 
     # Exact: the same SHA-256 must never show up in two splits.
     splits_per_sha = defaultdict(set)
-    for split_name, path in files:
+    for split_name, _, path in files:
         splits_per_sha[file_hash(path)].add(split_name)
     exact_cross = sum(1 for s in splits_per_sha.values() if len(s) > 1)
 
-    # Near: compare every pair of perceptual hashes; count close pairs in different splits.
-    hashes = np.array([perceptual_hash(path) for _, path in files], dtype=np.uint64)
-    split_of = [split_name for split_name, _ in files]
+    # Near: compare every pair; count matching pairs that sit in different splits.
+    hashes = [image_hashes(path) for _, _, path in files]
+    phashes = np.array([h[0] for h in hashes], dtype=np.uint64)
+    dhashes = np.array([h[1] for h in hashes], dtype=np.uint64)
+    splits = np.array([f[0] for f in files])
+    labels = np.array([f[1] for f in files])
     near_cross = 0
     for i in range(len(files)):
-        distances = hamming_distances(hashes[i], hashes[i + 1:])
-        for k in np.nonzero(distances <= max_distance)[0]:
-            if split_of[i + 1 + k] != split_of[i]:
-                near_cross += 1
+        later = slice(i + 1, None)
+        match = is_near_match(labels[later] == labels[i],
+                              hamming_distances(phashes[i], phashes[later]),
+                              hamming_distances(dhashes[i], dhashes[later]), rules)
+        near_cross += int(np.sum(match & (splits[later] != splits[i])))
 
     if exact_cross or near_cross:
         raise SystemExit(f"FAILED: {exact_cross} exact and {near_cross} near duplicates span two splits.")
     print("Overlap check passed: no exact or near duplicate appears in more than one split.")
 
 
+def check_counts(n_found, removed_counts, n_final, n_removed_rows):
+    """Stop with a clear message unless: images found - every removal = images in the splits.
+
+    Also checks that results/removed_duplicates.csv has exactly one row per removed image.
+    (A plain `assert` would be skipped if Python runs with -O, so this uses SystemExit.)
+    """
+    n_removed = sum(removed_counts.values())
+    parts = " - ".join(f"{n} {name}" for name, n in removed_counts.items())
+    print(f"\nCount check: {n_found} found - {parts} = {n_found - n_removed}; "
+          f"{n_final} in the splits; {n_removed_rows} rows in {rel(REMOVED_CSV)}.")
+    if n_found - n_removed != n_final or n_removed_rows != n_removed:
+        raise SystemExit(f"FAILED count check: {n_found} found - {n_removed} removed = {n_found - n_removed}, "
+                         f"but the splits hold {n_final} images and the removed list has {n_removed_rows} rows.")
+    print("Count check passed.")
+
+
 # ---------------------------------------------------------------------------
-# Step 9-10: class weights and the removed-files log
+# Step 9-11: class weights, removed-files log, baseline
 # ---------------------------------------------------------------------------
 
-def write_class_weights(splits_by_class, num_classes):
-    """Inverse-frequency weights from the TRAIN split only.
+def compute_class_weights(splits_by_class, num_classes):
+    """Two sets of class weights, both from the TRAIN split only.
 
-    weight = total_train / (num_classes * class_train_count)
-    Rare classes get a weight above 1, common ones below 1, so the loss
-    pays more attention to the classes with fewer images.
+    inverse_frequency:      total_train / (num_classes * class_count)
+        Rare classes get a weight above 1, common ones below 1.
+    sqrt_inverse_frequency: sqrt(total_train / (num_classes * class_count)),
+        then divided by the average so the weights average to exactly 1.
+        A gentler push toward rare classes; often more stable in training.
     """
     class_order = sorted(splits_by_class)  # alphabetical = torchvision ImageFolder order
     train_counts = {c: len(splits_by_class[c]["train"]) for c in class_order}
@@ -418,40 +467,69 @@ def write_class_weights(splits_by_class, num_classes):
     if 0 in train_counts.values():
         raise SystemExit(f"A class has no training images: {train_counts}")
 
-    percents = {c: round(100 * n / total_train, 2) for c, n in train_counts.items()}
-    weights = {c: round(total_train / (num_classes * n), 4) for c, n in train_counts.items()}
+    inverse = {c: total_train / (num_classes * n) for c, n in train_counts.items()}
+    sqrt_raw = {c: math.sqrt(w) for c, w in inverse.items()}
+    sqrt_mean = sum(sqrt_raw.values()) / len(sqrt_raw)
+    sqrt_norm = {c: w / sqrt_mean for c, w in sqrt_raw.items()}
 
-    data = {
+    def weight_set(formula, by_class):
+        rounded = {c: round(by_class[c], 4) for c in class_order}
+        return {"formula": formula, "by_class": rounded, "in_class_order": [rounded[c] for c in class_order]}
+
+    return {
         "num_classes": num_classes,
         "class_order": class_order,
         "train_counts": train_counts,
         "train_total": total_train,
-        "train_percent": percents,
-        "weights": weights,
-        "weights_in_class_order": [weights[c] for c in class_order],
-        "formula": "total_train / (num_classes * class_train_count)",
+        "train_percent": {c: round(100 * n / total_train, 2) for c, n in train_counts.items()},
+        "weights": {
+            "inverse_frequency": weight_set(
+                "total_train / (num_classes * class_train_count)", inverse),
+            "sqrt_inverse_frequency": weight_set(
+                "sqrt(total_train / (num_classes * class_train_count)), divided by the mean so the weights average to 1",
+                sqrt_norm),
+        },
     }
-    RESULTS_DIR.mkdir(exist_ok=True)
-    with open(WEIGHTS_JSON, "w") as f:
-        json.dump(data, f, indent=2)
-        f.write("\n")
 
+
+def print_class_weights(data):
+    """Show train share and both weight sets, one line per class."""
+    w = data["weights"]
     print(f"\nTrain split share and class weights ({rel(WEIGHTS_JSON)}):")
-    for c in class_order:
-        print(f"  {c:<12}{train_counts[c]:>6} images  {percents[c]:>6.2f}% of train   weight {weights[c]:.4f}")
+    print(f"  {'class':<12}{'train':>7}{'% train':>10}{'inverse':>10}{'sqrt inv':>10}")
+    for c in data["class_order"]:
+        print(f"  {c:<12}{data['train_counts'][c]:>7}{data['train_percent'][c]:>9.2f}%"
+              f"{w['inverse_frequency']['by_class'][c]:>10.4f}{w['sqrt_inverse_frequency']['by_class'][c]:>10.4f}")
+
+
+def print_majority_baseline(splits_by_class):
+    """Accuracy and macro F1 on validation if a model always guessed the biggest train class.
+
+    For the guessed class: precision = accuracy, recall = 1, so F1 = 2*acc/(acc+1).
+    Every other class is never predicted, so its F1 is 0.
+    Macro F1 is the plain average of the per-class F1 scores.
+    """
+    majority = max(splits_by_class, key=lambda c: len(splits_by_class[c]["train"]))
+    n_val = sum(len(s["validation"]) for s in splits_by_class.values())
+    accuracy = len(splits_by_class[majority]["validation"]) / n_val
+    f1_majority = 2 * accuracy / (accuracy + 1)
+    macro_f1 = f1_majority / len(splits_by_class)
+    print(f"\nBaseline 'always guess {majority}' on validation ({n_val} images): "
+          f"accuracy {100 * accuracy:.2f}%, macro F1 {macro_f1:.4f}")
 
 
 def write_removed_csv(removed_rows):
     """Write every dropped file with the reason, sorted by file path."""
     RESULTS_DIR.mkdir(exist_ok=True)
     with open(REMOVED_CSV, "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=["file", "kept_copy", "reason", "distance"])
+        # extrasaction="ignore" skips the helper keys ("pair", "pair_with") used by the spot check.
+        writer = csv.DictWriter(f, fieldnames=REMOVED_COLUMNS, extrasaction="ignore")
         writer.writeheader()
         writer.writerows(sorted(removed_rows, key=lambda row: row["file"]))
 
 
 def print_table(splits_by_class):
-    """Print class counts per split as a small table."""
+    """Print class counts per split as a small table. Returns the grand total."""
     print(f"\n{'class':<12}{'train':>8}{'validation':>12}{'test':>8}{'total':>8}")
     print("-" * 48)
     totals = Counter()
@@ -463,6 +541,41 @@ def print_table(splits_by_class):
         print(f"{class_name:<12}{counts['train']:>8}{counts['validation']:>12}{counts['test']:>8}{total:>8}")
     print("-" * 48)
     print(f"{'TOTAL':<12}{totals['train']:>8}{totals['validation']:>12}{totals['test']:>8}{totals['total']:>8}")
+    return totals["total"]
+
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+def find_duplicates(config, active):
+    """Steps 2-4. Returns (kept items, removed rows, images found, removal counts).
+
+    Shared with src/data/review_near_dups.py so the spot check uses the exact same rules.
+    """
+    rules = config["near_duplicates"]
+    removed_rows = []  # one dict per dropped file, written to results/removed_duplicates.csv
+    items, n_found = collect_images(config, active, removed_rows)
+    if not items:
+        raise SystemExit("No images found. Run src/data/download.py first.")
+    n_corrupted = len(removed_rows)
+
+    items, n_exact, n_exact_conflict = remove_exact_duplicates(items, removed_rows)
+    print(f"Checking near duplicates across all classes: same class pHash <= {rules['same_class_max_phash']}, "
+          f"cross class pHash <= {rules['cross_class_max_phash']}, and dHash <= {rules['max_dhash']}...")
+    items, n_near, n_groups, n_near_conflict = remove_near_duplicates(items, removed_rows, rules)
+
+    removed_counts = {
+        "corrupted": n_corrupted,
+        "exact duplicates": n_exact,
+        "near duplicates": n_near,
+        "label-conflict images": n_exact_conflict + n_near_conflict,
+    }
+    print(f"\nRemoved {n_exact} exact duplicates, {n_near} near duplicates, and "
+          f"{n_exact_conflict + n_near_conflict} images in label conflicts ({n_groups} near-duplicate groups"
+          + (f" + {n_exact_conflict} exact-duplicate images" if n_exact_conflict else "")
+          + f"). Dropped {n_corrupted} corrupted files. {len(items)} images remain.")
+    return items, removed_rows, n_found, removed_counts
 
 
 def main():
@@ -474,25 +587,10 @@ def main():
     config, active, num_classes = load_config(args.num_classes)
     ratios = config["split"]["ratios"]
     seed = config["split"]["seed"]
-    max_distance = config["near_duplicate_max_distance"]
     if abs(sum(ratios.values()) - 1.0) > 1e-6:
         raise SystemExit("split ratios in label_map.yaml must add up to 1.0")
 
-    removed_rows = []  # one dict per dropped file, written to results/removed_duplicates.csv
-    items = collect_images(config, active, removed_rows)
-    if not items:
-        raise SystemExit("No images found. Run src/data/download.py first.")
-
-    items, n_exact, n_exact_conflict = remove_exact_duplicates(items, removed_rows)
-    print(f"Checking near duplicates (perceptual hash, distance <= {max_distance}) across all classes...")
-    items, n_near, n_conflict_groups, n_near_conflict = remove_near_duplicates(items, removed_rows, max_distance)
-
-    n_corrupted = sum(1 for row in removed_rows if row["reason"] == "corrupted")
-    print(f"\nRemoved {n_exact} exact duplicates, {n_near} near duplicates, "
-          f"and {n_exact_conflict + n_near_conflict} images in label conflicts "
-          f"({n_conflict_groups} near-duplicate groups"
-          + (f" + {n_exact_conflict} exact-duplicate images" if n_exact_conflict else "")
-          + f"). Skipped {n_corrupted} corrupted files. {len(items)} images remain.")
+    items, removed_rows, n_found, removed_counts = find_duplicates(config, active)
 
     by_class = defaultdict(list)
     for item in items:
@@ -503,19 +601,33 @@ def main():
     if missing:
         raise SystemExit(f"No images left for class(es) {sorted(missing)}. Check data/raw/ and label_map.yaml.")
     splits_by_class = {cls: split_list(by_class[cls], ratios, seed) for cls in sorted(by_class)}
-    print_table(splits_by_class)
+    n_in_splits = print_table(splits_by_class)
+
+    weights = compute_class_weights(splits_by_class, num_classes)
+    print_class_weights(weights)
+    print_majority_baseline(splits_by_class)
 
     if args.dry_run:
+        check_counts(n_found, removed_counts, n_in_splits, len(removed_rows))
         print("\n(dry run: nothing was written)")
         return
 
     copy_splits_and_write_manifests(splits_by_class)
     write_removed_csv(removed_rows)
-    write_class_weights(splits_by_class, num_classes)
+    RESULTS_DIR.mkdir(exist_ok=True)
+    with open(WEIGHTS_JSON, "w") as f:
+        json.dump(weights, f, indent=2)
+        f.write("\n")
     print()
-    check_no_overlap(max_distance)
+    check_no_overlap(config["near_duplicates"])
+
+    # Final arithmetic check against what is really on disk.
+    n_on_disk = len(split_files_on_disk())
+    with open(REMOVED_CSV) as f:
+        n_csv_rows = sum(1 for _ in csv.DictReader(f))
+    check_counts(n_found, removed_counts, n_on_disk, n_csv_rows)
     print(f"Wrote data/train, data/validation, data/test, data/splits/*.csv, "
-          f"{rel(REMOVED_CSV)}  (seed={seed}, {num_classes} classes)")
+          f"{rel(REMOVED_CSV)}, {rel(WEIGHTS_JSON)}  (seed={seed}, {num_classes} classes)")
 
 
 if __name__ == "__main__":
