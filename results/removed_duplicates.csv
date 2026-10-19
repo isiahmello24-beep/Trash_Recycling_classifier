@@ -1,176 +1,60 @@
-file,kept_copy,reason,distance
-data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery125.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash593.jpg),label_conflict (hazardous vs recycling vs trash),2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery168.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery104.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery327.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery270.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery343.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery268.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery356.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash380.jpg),label_conflict (hazardous vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery357.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery268.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery461.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery340.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery467.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery293.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery61.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash357.jpg),label_conflict (hazardous vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery777.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery128.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery833.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery63.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery945.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery759.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery959.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery2.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery971.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash595.jpg),label_conflict (hazardous vs recycling vs trash),2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery974.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery965.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological1032.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological1003.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological1034.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological1019.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological1035.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological1010.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological1038.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological1018.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological465.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological404.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological556.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological337.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological698.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological286.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological709.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological401.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological781.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological402.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological823.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological369.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological865.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological410.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological912.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological385.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological981.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological723.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass103.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass189.jpg),label_conflict (recycling vs trash),2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass189.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash370.jpg),label_conflict (recycling vs trash),0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass397.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass105.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass440.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass558.jpg),label_conflict (hazardous vs recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass530.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass407.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass573.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass445.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass597.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass541.jpg),label_conflict (hazardous vs recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass94.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass103.jpg),label_conflict (recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard306.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard245.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard464.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash564.jpg),label_conflict (recycling vs trash),2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard518.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard215.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard620.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard532.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard650.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard527.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard711.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard674.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard751.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard501.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard832.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard729.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard964.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard741.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard993.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard967.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass210.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass115.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass254.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass221.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass270.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass264.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass292.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass2.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass296.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass483.jpg),label_conflict (recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass355.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass238.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass408.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash498.jpg),label_conflict (recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass417.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass149.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass421.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass266.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass430.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass115.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass454.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass449.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass46.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass190.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass474.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash409.jpg),label_conflict (recycling vs trash),0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass480.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash437.jpg),label_conflict (recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass481.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic714.jpg),label_conflict (recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass483.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass103.jpg),label_conflict (recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass488.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass451.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass526.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass277.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass541.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass660.jpg),label_conflict (hazardous vs recycling vs trash),0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass550.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass244.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass553.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass240.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass558.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass440.jpg),label_conflict (hazardous vs recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass572.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass462.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass595.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass581.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass635.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass451.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass649.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass636.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass657.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass655.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass660.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass541.jpg),label_conflict (hazardous vs recycling vs trash),0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal408.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal40.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal514.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal469.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal539.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass98.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal581.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal469.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal650.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal589.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal681.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal548.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal718.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass98.jpg,near_duplicate,6
-data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal729.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal469.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal745.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal590.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal787.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal784.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal788.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal489.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal811.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal487.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal819.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal773.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal82.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal419.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal836.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal827.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper1072.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper1059.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper1103.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper1098.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper1117.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper1112.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper31.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper23.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper462.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper455.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper481.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper1003.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper546.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper1005.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper60.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper511.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper679.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper551.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper709.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper705.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper759.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper633.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper810.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper557.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper812.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper517.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper822.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper575.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper886.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper755.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper892.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper1011.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper903.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper894.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper913.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper48.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper939.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper495.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper982.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper716.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper988.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper973.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper995.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper1019.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic250.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal81.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic398.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal86.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic403.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic348.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic506.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic467.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic603.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic593.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic662.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic262.jpg,near_duplicate,8
-data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic676.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic262.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic698.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal86.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic714.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass481.jpg),label_conflict (recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic885.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash465.jpg),label_conflict (hazardous vs recycling vs trash),2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash20.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash12.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash301.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash238.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash315.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash147.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash333.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash322.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash357.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery61.jpg),label_conflict (hazardous vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash360.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash468.jpg),label_conflict (hazardous vs recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash368.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass408.jpg),label_conflict (recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash370.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass189.jpg),label_conflict (recycling vs trash),0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash380.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery356.jpg),label_conflict (hazardous vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash409.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass474.jpg),label_conflict (recycling vs trash),0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash413.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash652.jpg),label_conflict (recycling vs trash),0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash433.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash376.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash437.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash413.jpg),label_conflict (recycling vs trash),2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash448.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass223.jpg),label_conflict (recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash463.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass189.jpg),label_conflict (recycling vs trash),2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash465.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic885.jpg),label_conflict (hazardous vs recycling vs trash),2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash468.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash360.jpg),label_conflict (hazardous vs recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash498.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass408.jpg),label_conflict (recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash500.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash564.jpg),label_conflict (recycling vs trash),2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash502.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic885.jpg),label_conflict (hazardous vs recycling vs trash),2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash519.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash508.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash521.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic714.jpg),label_conflict (recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash523.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash513.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash526.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass597.jpg),label_conflict (hazardous vs recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash533.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash465.jpg),label_conflict (hazardous vs recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash546.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash474.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash557.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash430.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash564.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard464.jpg),label_conflict (recycling vs trash),2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash593.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery125.jpg),label_conflict (hazardous vs recycling vs trash),2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash595.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery971.jpg),label_conflict (hazardous vs recycling vs trash),2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash631.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass474.jpg),label_conflict (recycling vs trash),2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash652.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash413.jpg),label_conflict (recycling vs trash),0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash653.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash547.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash659.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash458.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash665.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash356.jpg,near_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash688.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash683.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash8.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash15.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass223.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash448.jpg),label_conflict (recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass29.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic555.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass317.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic735.jpg,near_duplicate,6
-data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass340.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass261.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass408.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash368.jpg),label_conflict (recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass412.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal459.jpg,exact_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass424.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/brown-glass/brown-glass376.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass433.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass558.jpg),label_conflict (hazardous vs recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass450.jpg,none (matches data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery971.jpg),label_conflict (hazardous vs recycling vs trash),4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass452.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic735.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass456.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass343.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass460.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass393.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass472.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass300.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass688.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass674.jpg,near_duplicate,2
-data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass722.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass710.jpg,near_duplicate,4
-data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass761.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic556.jpg,exact_duplicate,0
-data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass803.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass798.jpg,near_duplicate,0
+file,kept_copy,reason,distance,dhash_distance
+data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery343.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery268.jpg,near_duplicate,0,2
+data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery833.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery63.jpg,near_duplicate,0,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery945.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery759.jpg,near_duplicate,0,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery959.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery2.jpg,near_duplicate,0,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery974.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/battery/battery965.jpg,near_duplicate,0,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological1032.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological1003.jpg,near_duplicate,2,0
+data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological1034.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological1019.jpg,near_duplicate,0,0
+data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological1035.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological1010.jpg,near_duplicate,2,0
+data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological1038.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological1018.jpg,near_duplicate,2,0
+data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological465.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological404.jpg,near_duplicate,0,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological698.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological286.jpg,near_duplicate,0,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological781.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological402.jpg,near_duplicate,0,0
+data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological865.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/biological/biological410.jpg,near_duplicate,0,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard306.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard245.jpg,near_duplicate,2,2
+data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard620.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard532.jpg,near_duplicate,0,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard650.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard527.jpg,near_duplicate,0,0
+data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard751.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard501.jpg,near_duplicate,0,0
+data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard964.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard741.jpg,near_duplicate,0,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard993.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/cardboard/cardboard967.jpg,near_duplicate,2,0
+data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass270.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass264.jpg,near_duplicate,2,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass292.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass2.jpg,near_duplicate,2,2
+data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass417.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass149.jpg,near_duplicate,2,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass421.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass266.jpg,near_duplicate,2,0
+data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass430.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass115.jpg,near_duplicate,2,2
+data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass46.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass190.jpg,near_duplicate,0,2
+data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass488.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass451.jpg,near_duplicate,0,0
+data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass526.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass277.jpg,near_duplicate,0,2
+data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass550.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass244.jpg,near_duplicate,2,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass553.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass240.jpg,near_duplicate,0,2
+data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass635.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass451.jpg,near_duplicate,0,0
+data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass657.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass655.jpg,near_duplicate,2,0
+data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass660.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/green-glass/green-glass541.jpg,near_duplicate,0,0
+data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal514.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal469.jpg,near_duplicate,2,0
+data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal650.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal589.jpg,near_duplicate,2,2
+data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal745.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal590.jpg,near_duplicate,2,0
+data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal787.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal784.jpg,near_duplicate,0,2
+data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal788.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal489.jpg,near_duplicate,0,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal811.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal487.jpg,near_duplicate,0,2
+data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal819.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal773.jpg,near_duplicate,0,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal836.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal827.jpg,near_duplicate,2,2
+data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper1103.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper1098.jpg,near_duplicate,0,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper1117.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper1112.jpg,near_duplicate,2,0
+data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper60.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper511.jpg,near_duplicate,2,2
+data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper709.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper705.jpg,near_duplicate,0,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper810.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper557.jpg,near_duplicate,2,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper903.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper894.jpg,near_duplicate,2,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper988.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/paper/paper973.jpg,near_duplicate,2,2
+data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic506.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic467.jpg,near_duplicate,0,0
+data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash301.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash238.jpg,near_duplicate,0,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash413.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash370.jpg,near_duplicate,2,2
+data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash519.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash508.jpg,near_duplicate,2,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash631.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash409.jpg,near_duplicate,2,2
+data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash652.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash370.jpg,near_duplicate,2,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash665.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash356.jpg,near_duplicate,0,2
+data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash688.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/trash/trash683.jpg,near_duplicate,2,2
+data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass412.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/metal/metal459.jpg,exact_duplicate,0,0
+data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass688.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass674.jpg,near_duplicate,2,1
+data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass761.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/plastic/plastic556.jpg,exact_duplicate,0,0
+data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass803.jpg,data/raw/garbage12_enhanced/garbage_classification_enhanced/white-glass/white-glass798.jpg,near_duplicate,0,0
