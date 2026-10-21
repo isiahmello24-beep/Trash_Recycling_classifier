@@ -92,10 +92,10 @@ def load_model(path, arch, num_classes, device):
         loaded = torch.load(str(path), map_location=device, weights_only=False)
     except Exception:
         loaded = None  # not a torch.save file; maybe TorchScript, tried below
-    if isinstance(loaded, torch.nn.Module):  # 2. whole model
+    if isinstance(loaded, torch.nn.Module):  # 2. whole model (also how a TorchScript file usually loads)
         model = loaded
         print(f"Loaded {path} as a whole PyTorch model.")
-    elif isinstance(loaded, dict):  # 3. state_dict
+    elif isinstance(loaded, dict):  # 1. state_dict
         if arch is None:
             raise SystemExit(f"{path} is a state_dict (weights only), so the network must be rebuilt: "
                              f"add --arch, one of {', '.join(ARCHITECTURES)}.")
@@ -103,7 +103,7 @@ def load_model(path, arch, num_classes, device):
         model = build_architecture(arch, num_classes)
         model.load_state_dict(state)
         print(f"Loaded {path} as a state_dict into {arch}.")
-    elif loaded is None:  # 1. TorchScript (older format; Python 3.14 prints a deprecation warning)
+    elif loaded is None:  # 3. TorchScript that torch.load could not read (older format)
         try:
             model = torch.jit.load(str(path), map_location=device)
         except Exception as err:
@@ -136,6 +136,9 @@ def predict_split(model, rows, classes, preprocess, device, batch_size):
                 with Image.open(REPO_ROOT / r["path"]) as img:
                     images.append(preprocess(img.convert("RGB")))
             logits = model(torch.stack(images).to(device))
+            if logits.shape[1] != len(classes):
+                raise SystemExit(f"The model has {logits.shape[1]} outputs but there are {len(classes)} classes "
+                                 f"{classes}. Wrong model file, or the split was built with a different num_classes.")
             probs = torch.softmax(logits, dim=1)  # turn raw scores into probabilities that add up to 1
             confidence, index = probs.max(dim=1)
             for r, c, i in zip(batch_rows, confidence.tolist(), index.tolist()):

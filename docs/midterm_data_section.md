@@ -14,10 +14,10 @@ Charts: `results/class_counts.png` and `results/split_counts.png`
 - We use 10 of its 12 folders, mapped to our 4 San Diego classes: 7 kinds of recycling, biological = compost, trash, and battery = hazardous. Clothes dropped, shoes undecided.
 - **8,502 images** in the splits after cleaning: recycling 5,788, compost 1,025, hazardous 972, trash 717. (Chart: `results/class_counts.png`.)
 - Split 70 / 15 / 15 with a fixed seed: 5,961 train, 1,271 validation, 1,270 test.
-- Still to come: Amy's own photos (about 8,000) and 50 of my battery photos. Real-world shots, not web images.
+- Still to come: Amy's own photos and 50 of my battery photos. Real-world shots, not web images. Neither is in the splits yet.
 
 **Speaker notes (about 50 seconds):**
-So, where did the data come from. Right now it's one Kaggle dataset, the 12-class garbage set: about 15,900 web images with clean backgrounds, under an open database license. We map ten of its folders onto our four San Diego classes: seven kinds of recycling, food waste to compost, trash, and batteries to hazardous. After cleaning we have 8,502 images, and the chart shows recycling is way bigger than the rest. We split it 70-15-15 with a fixed seed, so everyone on the team gets the exact same train, validation and test sets. Next up is real photos: Amy has about eight thousand of her own and I'm adding fifty battery shots, because web images are too clean for a Pi camera.
+So, where did the data come from. Right now it's one Kaggle dataset, the 12-class garbage set: about 15,900 web images with clean backgrounds, under an open database license. We map ten of its folders onto our four San Diego classes: seven kinds of recycling, food waste to compost, trash, and batteries to hazardous. After cleaning we have 8,502 images, and the chart shows recycling is way bigger than the rest. We split it 70-15-15 with a fixed seed, so everyone on the team gets the exact same train, validation and test sets. Next up is real photos: Amy is bringing her own and I'm adding fifty battery shots, because web images are too clean for a Pi camera.
 ---
 
 ## Slide 2: How we cleaned it
@@ -35,10 +35,10 @@ Cleaning was most of the work. Exact duplicates were easy, there were two. Near-
 ## Slide 3: The imbalance problem
 
 - Recycling is **68.1% of the training set** (4,059 of 5,961). Compost 12.0%, hazardous 11.4%, trash 8.4%.
-- A model that always says "recycling" scores **68% accuracy** but only **0.20 macro F1** on validation. That's why we report macro F1, not accuracy.
+- A model that always says "recycling" scores **68% accuracy** but only **0.20 macro F1** on validation (865 of 1,271 validation images are recycling; see `docs/dataset_inventory.md`). That's why we report macro F1, not accuracy.
 - Class weights fix the pull toward recycling: inverse-frequency weights are compost 2.08, hazardous 2.19, recycling 0.37, trash 2.96 (a gentler square-root version is also saved).
 - The "I'm not sure" cutoff is **tuned on validation and reported on test**. Picking it on test would mean choosing the number that flatters us.
-- Real model results: pending real model results.
+- Accuracy and macro F1 of the trained model: pending real model results.
 
 **Speaker notes (about 50 seconds):**
 Here's the catch with our data: two thirds of the training images are recycling. A model that just says recycling every time gets 68 percent accuracy, but its macro F1 is 0.20, which is terrible. Macro F1 treats all four classes equally, so that's the number we track. To stop the model leaning on recycling, training gets a weight per class: a trash mistake costs about eight times a recycling mistake. The other piece is the I'm-not-sure answer. The Pi only answers when the model is confident enough. We pick that cutoff on validation, then report what it does on test; picking it on test would mean choosing whichever number looks best. The real model numbers are pending until Amy's results are in.
