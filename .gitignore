@@ -100,3 +100,7 @@ raspberry_pi/test_photos/
 # Output of src/eval/evaluate.py. It depends on which predictions CSV was scored
 # (the fake sample gives fake numbers), so it stays local like the charts.
 results/threshold_sweep.csv
+
+# Prediction CSVs from src/evaluation/export_predictions.py: they belong to one
+# model file, so they are shared in the PR or Discord, not committed.
+results/*_predictions.csv
