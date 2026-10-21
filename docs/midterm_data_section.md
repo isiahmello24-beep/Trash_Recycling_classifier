@@ -23,13 +23,13 @@ So, where did the data come from. Right now it's one Kaggle dataset, the 12-clas
 ## Slide 2: How we cleaned it
 
 - **Exact copies:** 2 identical files found and removed.
-- **Near copies:** 57 removed. Two image fingerprints (pHash and dHash) both have to agree, after we checked borderline matches by eye. Our first rule caught 125, but about half of those were different objects that just looked alike.
+- **Near copies:** 57 removed. Two image fingerprints (pHash and dHash) both have to agree, after we checked borderline matches by eye. Our first rule caught 125, but when we checked borderline matches by eye, many were different objects that just looked alike.
 - **Label conflicts:** look-alikes with different labels are never deleted; they go to a review file. 0 open today (a looser rule flagged 6 groups, all false matches like bottles vs toothbrushes).
 - **Leaks:** a check found 17 validation/test images that were near-copies of training images. They're out, so test scores can't be inflated by memorized photos.
 - **Clothes dropped** (5,286 images, team decision Oct 18). **Before → after:** 8,578 images considered → 8,502 in the splits. Sideways iPhone photos get turned upright automatically before any of this runs.
 
 **Speaker notes (about 50 seconds):**
-Cleaning was most of the work. Exact duplicates were easy, there were two. Near-duplicates were the interesting part: we fingerprint every image two ways, and both have to agree. Our first rule flagged 125, and when I checked them by eye about half were different objects with the same outline. The stricter rule gives 57. We never delete on a guess: look-alikes with different labels go to a review file, which is empty right now. The part I'm proudest of is the leak check. Seventeen validation and test images were near-copies of training images, which would have inflated our scores, so they're gone. We also dropped clothes. Net: 8,578 images in, 8,502 out, every file accounted for.
+Cleaning was most of the work. Exact duplicates were easy, there were two. Near-duplicates were the interesting part: we fingerprint every image two ways, and both have to agree. Our first rule flagged 125, and when I checked the borderline ones by eye, a lot were different objects with the same outline. The stricter rule gives 57. We never delete on a guess: look-alikes with different labels go to a review file, which is empty right now. The part I'm proudest of is the leak check. Seventeen validation and test images were near-copies of training images, which would have inflated our scores, so they're gone. We also dropped clothes. Net: 8,578 images in, 8,502 out, every file accounted for.
 ---
 
 ## Slide 3: The imbalance problem

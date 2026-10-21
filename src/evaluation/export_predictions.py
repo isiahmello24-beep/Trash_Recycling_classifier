@@ -99,9 +99,14 @@ def load_model(path, arch, num_classes, device):
         if arch is None:
             raise SystemExit(f"{path} is a state_dict (weights only), so the network must be rebuilt: "
                              f"add --arch, one of {', '.join(ARCHITECTURES)}.")
-        state = loaded.get("state_dict", loaded)  # some checkpoints wrap it in a dict
+        # Some checkpoints wrap the weights: {"state_dict": ...} or {"model_state_dict": ...}.
+        state = loaded.get("state_dict", loaded.get("model_state_dict", loaded))
         model = build_architecture(arch, num_classes)
-        model.load_state_dict(state)
+        try:
+            model.load_state_dict(state)
+        except RuntimeError as err:  # wrong architecture, or a head trained for another number of classes
+            raise SystemExit(f"{path} does not fit {arch} with {num_classes} classes {class_order()}.\n"
+                             f"Check --arch and that the split was built with the same num_classes.\nDetails: {err}")
         print(f"Loaded {path} as a state_dict into {arch}.")
     elif loaded is None:  # 3. TorchScript that torch.load could not read (older format)
         try:
