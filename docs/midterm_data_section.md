@@ -17,7 +17,7 @@ Charts: `results/class_counts.png` and `results/split_counts.png`
 - Still to come: Amy's own photos (about 8,000) and 50 of my battery photos. Real-world shots, not web images.
 
 **Speaker notes (about 50 seconds):**
-So, where did the data come from. Right now it's one Kaggle dataset, the 12-class garbage set: about 15,900 web images with clean backgrounds, under an open database license, so we're fine to train on it. We map ten of its folders onto our four San Diego classes: seven kinds of recycling, food waste to compost, trash, and batteries to hazardous. After cleaning we have 8,502 images, and the chart shows recycling is way bigger than the rest. We split it 70-15-15 with a fixed seed, so everyone on the team gets the exact same train, validation and test sets. Next up is real photos: Amy has about eight thousand of her own and I'm adding fifty battery shots, because web images are too clean for a camera on a Pi.
+So, where did the data come from. Right now it's one Kaggle dataset, the 12-class garbage set: about 15,900 web images with clean backgrounds, under an open database license. We map ten of its folders onto our four San Diego classes: seven kinds of recycling, food waste to compost, trash, and batteries to hazardous. After cleaning we have 8,502 images, and the chart shows recycling is way bigger than the rest. We split it 70-15-15 with a fixed seed, so everyone on the team gets the exact same train, validation and test sets. Next up is real photos: Amy has about eight thousand of her own and I'm adding fifty battery shots, because web images are too clean for a Pi camera.
 ---
 
 ## Slide 2: How we cleaned it
